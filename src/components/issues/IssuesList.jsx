@@ -2,9 +2,16 @@ import React from 'react';
 import { Paper, Table, TableHead, TableRow, TableCell, TableBody, Tooltip, IconButton } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import Issues from './Issues';
+import { connect } from 'react-redux';
+import { toggleAddDialog } from '../../actions/dialogAction';
 
 
-const IssuesList = () => {
+const IssuesList = (props) => {
+
+  const handleClickOpen = () => {
+    props.toggleAddDialog(true);
+  }
+
   return (
     <Paper>
       <Table>
@@ -18,7 +25,7 @@ const IssuesList = () => {
             <TableCell align="left">Updated at</TableCell>
             <TableCell align="left">
               <Tooltip title="Add">
-                <IconButton color="primary">
+                <IconButton color="primary" onClick={handleClickOpen} >
                   <Add />
                 </IconButton>
               </Tooltip>
@@ -33,4 +40,16 @@ const IssuesList = () => {
   );
 }
 
-export default IssuesList;
+const mapStateToProps = (state) => {
+  return {
+    open: state.dialog.add,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleAddDialog: isOpen => dispatch(toggleAddDialog(isOpen))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IssuesList);
