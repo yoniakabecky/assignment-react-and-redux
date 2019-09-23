@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { toggleEditDialog } from '../../actions/dialogAction';
 
 const EditDialog = (props) => {
-
   const handleClose = () => {
     props.toggleEditDialog(false);
   }
@@ -67,7 +66,6 @@ const EditDialog = (props) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log('dialog', state);
   return {
     issue: state.issues,
     open: state.dialog.edit

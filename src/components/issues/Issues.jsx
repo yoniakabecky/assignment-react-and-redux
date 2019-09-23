@@ -34,7 +34,6 @@ const Issues = (props) => {
 
 // get data from store
 const mapStateToProps = (state) => {
-  console.log('issues', state)
   return {
     issues: state.issues.issues,
   }

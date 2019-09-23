@@ -21,7 +21,6 @@ export const editIssue = issue => {
 }
 
 export const addIssue = issue => {
-  console.log('inside action', issue);
   return (dispatch, getState) => {
     dispatch({
       type: ADD_ISSUE,

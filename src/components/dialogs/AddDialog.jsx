@@ -28,7 +28,7 @@ const AddDialog = (props) => {
       createdTime,
       updatedTime,
     }
-    console.log(newIssue);
+
     addIssue(newIssue);
     props.toggleAddDialog(false);
   }
@@ -102,7 +102,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log('dispatch', dispatch)
   return {
     addIssue: issue => dispatch(addIssue(issue)),
     toggleAddDialog: isOpen => dispatch(toggleAddDialog(isOpen)),
