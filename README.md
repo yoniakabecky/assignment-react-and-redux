@@ -12,9 +12,7 @@
     - [ ] Auto Reload
 - [x] Delete Button
 - [ ] Reload
-- [ ] Deploy
+- [x] Deploy [Deployed with Firebase](https://assignment2-react-and-redux.firebaseapp.com/)
 - [ ] Search Filter
 - [ ] Sort
 - [ ] Pagination
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
