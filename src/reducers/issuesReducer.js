@@ -10,15 +10,14 @@ const issuesReducer = (state = initialIssues, action) => {
         issues: newIssues
       }
     case ADD_ISSUE:
-      let added = state.issues;
-      added.push(action.issue);
+      const added = [...state.issues, action.issue];
       return {
         ...state,
         issues: added
       }
     case SET_DATA_AFTER_EDIT:
-      let editedIssues = state.issues;
       const index = state.issues.findIndex(issue => action.issue.id === issue.id);
+      const editedIssues = [...state.issues];
       editedIssues[index] = action.issue;
       return {
         ...state,

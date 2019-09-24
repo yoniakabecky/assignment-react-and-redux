@@ -5,13 +5,13 @@
 - [x] Add Button
     - [x] Dialog
     - [x] Update data
-    - [ ] Auto Reload
+    - [x] Auto Reload
 - [x] Edit Button
     - [x] Dialog
     - [x] Update data
-    - [ ] Auto Reload
+    - [x] Auto Reload
 - [x] Delete Button
-- [ ] Reload
+- [-] Reload
 - [x] Deploy ([Deployed with Firebase](https://assignment2-react-and-redux.firebaseapp.com/))
 - [ ] Search Filter
 - [ ] Sort

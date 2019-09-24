@@ -27,9 +27,9 @@ const Navbar = (props) => {
         <Toolbar>
           <Typography variant="h6" style={styles.title}>
             Angular 6 MatTable CRUD Example
-        </Typography>
+          </Typography>
           Reload data:
-        <Button color="inherit" style={styles.refreshBtn} onClick={handleReload}>
+          <Button color="inherit" style={styles.refreshBtn} onClick={handleReload}>
             <Refresh />
           </Button>
         </Toolbar>
