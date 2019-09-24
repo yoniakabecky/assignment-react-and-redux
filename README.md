@@ -15,4 +15,4 @@
 - [x] Deploy [Deployed with Firebase](https://assignment2-react-and-redux.firebaseapp.com/)
 - [ ] Search Filter
 - [ ] Sort
-- [ ] Pagination
+- [x] Pagination

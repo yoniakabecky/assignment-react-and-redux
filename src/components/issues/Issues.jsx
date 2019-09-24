@@ -1,7 +1,6 @@
 import React from 'react';
 import { TableRow, TableCell } from '@material-ui/core';
 import ActionButtons from './ActionButtons';
-import { connect } from 'react-redux';
 
 const styles = {
   title: {
@@ -9,7 +8,9 @@ const styles = {
   },
 };
 
+
 const Issues = (props) => {
+
   return (
     <>
       {props.issues.map(issue => (
@@ -17,7 +18,7 @@ const Issues = (props) => {
           <TableCell component="th">{issue.id}</TableCell>
           <TableCell style={styles.title}>{issue.title}</TableCell>
           <TableCell>{issue.state}</TableCell>
-          <TableCell style={styles.url}>{issue.url}</TableCell>
+          <TableCell>{issue.url}</TableCell>
           <TableCell>{issue.created_at}</TableCell>
           <TableCell>{issue.updated_at}</TableCell>
           <TableCell>
@@ -29,11 +30,5 @@ const Issues = (props) => {
   );
 }
 
-// get data from store
-const mapStateToProps = (state) => {
-  return {
-    issues: state.issues.issues,
-  }
-}
 
-export default connect(mapStateToProps)(Issues);
+export default Issues;
