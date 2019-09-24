@@ -7,9 +7,6 @@ const styles = {
   title: {
     maxWidth: "20vw",
   },
-  url: {
-    // maxWidth: "20vw",
-  },
 };
 
 const Issues = (props) => {

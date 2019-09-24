@@ -4,6 +4,23 @@ import { Add } from '@material-ui/icons';
 import Issues from './Issues';
 import { connect } from 'react-redux';
 import { toggleAddDialog } from '../../actions/dialogAction';
+import EditDialog from '../dialogs/EditDialog';
+import AddDialog from '../dialogs/AddDialog';
+
+const headerContents = [
+  "Id",
+  "Title",
+  "State",
+  "Url",
+  "Created at",
+  "Updated at",
+];
+
+const styles = {
+  roots: {
+    width: "100vw",
+  },
+};
 
 
 const IssuesList = (props) => {
@@ -13,16 +30,13 @@ const IssuesList = (props) => {
   }
 
   return (
-    <Paper>
+    <Paper style={styles.roots}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell align="left">Title</TableCell>
-            <TableCell align="left">State</TableCell>
-            <TableCell align="left">Url</TableCell>
-            <TableCell align="left">Created at</TableCell>
-            <TableCell align="left">Updated at</TableCell>
+            {headerContents.map((header, index) => (
+              <TableCell key={index} align="left">{header}</TableCell>
+            ))}
             <TableCell align="left">
               <Tooltip title="Add">
                 <IconButton color="primary" onClick={handleClickOpen} >
@@ -36,13 +50,16 @@ const IssuesList = (props) => {
           <Issues />
         </TableBody>
       </Table>
-    </Paper>
+      {!props.data ? "" : <EditDialog />}
+      <AddDialog />
+    </Paper >
   );
 }
 
 const mapStateToProps = (state) => {
   return {
     open: state.dialog.add,
+    data: state.data.issue,
   }
 }
 

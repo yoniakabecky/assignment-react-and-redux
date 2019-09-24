@@ -1,4 +1,4 @@
-import { DELETE_ISSUE, EDIT_ISSUE, ADD_ISSUE } from '../actions';
+import { DELETE_ISSUE, ADD_ISSUE, SET_DATA_AFTER_EDIT } from '../actions';
 import { initialIssues } from './initialIssues';
 
 const issuesReducer = (state = initialIssues, action) => {
@@ -10,13 +10,20 @@ const issuesReducer = (state = initialIssues, action) => {
         issues: newIssues
       }
     case ADD_ISSUE:
-      let newIssue = state.issues.push(action)
+      let added = state.issues;
+      added.push(action.issue);
       return {
         ...state,
-        issues: newIssue
+        issues: added
       }
-    case EDIT_ISSUE:
-      return state;
+    case SET_DATA_AFTER_EDIT:
+      let editedIssues = state.issues;
+      const index = state.issues.findIndex(issue => action.issue.id === issue.id);
+      editedIssues[index] = action.issue;
+      return {
+        ...state,
+        issues: editedIssues
+      }
     default:
       return state;
   }

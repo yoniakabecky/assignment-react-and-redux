@@ -2,14 +2,15 @@ import React from 'react';
 import { Edit, Delete } from '@material-ui/icons';
 import { Tooltip, IconButton } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { deleteIssue, editIssue } from '../../actions';
+import { deleteIssue, setDataBeforeEdit } from '../../actions';
 import { toggleEditDialog } from '../../actions/dialogAction';
+
 
 const ActionButtons = (props) => {
 
   const handleEditClick = () => {
     props.toggleEditDialog(true);
-    props.editIssue(props.issue)
+    props.setDataBeforeEdit(props.issue);
   }
 
   const handleDeleteClick = () => {
@@ -36,7 +37,7 @@ const ActionButtons = (props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteIssue: id => dispatch(deleteIssue(id)),
-    editIssue: issue => dispatch(editIssue(issue)),
+    setDataBeforeEdit: issue => dispatch(setDataBeforeEdit(issue)),
     toggleEditDialog: isOpen => dispatch(toggleEditDialog(isOpen)),
   }
 }
