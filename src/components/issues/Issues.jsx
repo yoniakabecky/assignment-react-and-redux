@@ -10,7 +10,7 @@ const Issues = (props) => {
       {props.issues.map(issue => (
         <TableRow key={issue.id}>
           <TableCell component="th">{issue.id}</TableCell>
-          <TableCell>{issue.title}</TableCell>
+          <TableCell style={{ width: "20vw" }}>{issue.title}</TableCell>
           <TableCell>{issue.state}</TableCell>
           <TableCell>{issue.url}</TableCell>
           <TableCell>{issue.created_at}</TableCell>

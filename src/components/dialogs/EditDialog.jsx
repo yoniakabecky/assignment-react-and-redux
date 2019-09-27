@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { toggleEditDialog } from '../../actions/dialogAction';
 import { setDataAfterEdit } from '../../actions/index';
+import moment from 'moment';
 
 const CssTextField = withStyles({
   root: {
@@ -29,14 +30,12 @@ const EditDialog = (props) => {
   const [status, setStatus] = useState("");
   const [url, setUrl] = useState("");
   const [created_at, setCreated_at] = useState("");
-  const [updated_at, setUpdated_at] = useState("");
 
   useEffect(() => {
     setTitle(props.data.title);
     setStatus(props.data.state);
     setUrl(props.data.url);
     setCreated_at(props.data.created_at);
-    setUpdated_at(props.data.updated_at);
   }, [props.data])
 
   const handleClose = () => {
@@ -46,13 +45,15 @@ const EditDialog = (props) => {
   const handleChange = (e) => {
     e.preventDefault();
 
+    const updatedTime = moment().format('YYYY-MM-DD hh:mm:ss');
+
     const editedIssue = {
       id: props.data.id,
       title,
       state: status,
       url,
       created_at,
-      updated_at,
+      updated_at: updatedTime,
     }
 
     props.setDataAfterEdit(editedIssue);
@@ -102,15 +103,6 @@ const EditDialog = (props) => {
               fullWidth
               value={created_at}
               onChange={(e) => setCreated_at(e.target.value)}
-            />
-            <CssTextField
-              margin="normal"
-              id="updated at"
-              label="Updated_at"
-              type="text"
-              fullWidth
-              value={updated_at}
-              onChange={(e) => setUpdated_at(e.target.value)}
             />
           </DialogContent>
           <DialogActions style={styles.actionBtn}>

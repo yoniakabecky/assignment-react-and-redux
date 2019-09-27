@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { toggleAddDialog } from '../../actions/dialogAction';
 import { addIssue } from '../../actions/index';
 import uuid from 'uuid/v1';
+import moment from 'moment';
 
 
 const CssTextField = withStyles({
@@ -28,11 +29,9 @@ const styles = {
 
 const AddDialog = (props) => {
 
-  const [title, setTitle] = useState("");
-  const [status, setStatus] = useState("");
-  const [url, setUrl] = useState("");
-  const [createdTime, setCreatedTime] = useState("");
-  const [updatedTime, setUpdatedTime] = useState("");
+  const [title, setTitle] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [url, setUrl] = useState(null);
 
   const handleClose = () => {
     props.toggleAddDialog(false);
@@ -41,13 +40,15 @@ const AddDialog = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const submittedTime = moment().format('YYYY-MM-DD hh:mm:ss');
+
     const newIssue = {
       id: uuid(),
       title,
-      status,
+      state: status,
       url,
-      createdTime,
-      updatedTime,
+      created_at: submittedTime,
+      updated_at: submittedTime,
     }
 
     props.addIssue(newIssue);
@@ -56,66 +57,52 @@ const AddDialog = (props) => {
 
   return (
     <>
-      <Dialog open={props.open} onClose={handleClose} aria-labelledby="form-dialog-title" maxWidth="xs">
-        <DialogTitle id="form-dialog-title">Add New Issue</DialogTitle>
-        <DialogContent>
-          <CssTextField
-            margin="normal"
-            id="title"
-            label="Title"
-            type="text"
-            multiline
-            rows="2"
-            required
-            fullWidth
-            error={true}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <FormHelperText error={true} margin="dense">Required Field</FormHelperText>
-          <CssTextField
-            margin="normal"
-            id="state"
-            label="State"
-            type="text"
-            required
-            fullWidth
-            error={true}
-            onChange={(e) => setStatus(e.target.value)}
-          />
-          <FormHelperText error={true} margin="dense">Required Field</FormHelperText>
-          <CssTextField
-            margin="normal"
-            id="url"
-            label="Url"
-            type="text"
-            fullWidth
-            onChange={(e) => setUrl(e.target.value)}
-          />
-          <CssTextField
-            margin="normal"
-            id="created at"
-            label="Created_at"
-            type="text"
-            fullWidth
-            onChange={(e) => setCreatedTime(e.target.value)}
-          />
-          <CssTextField
-            margin="normal"
-            id="updated at"
-            label="Updated_at"
-            type="text"
-            fullWidth
-            onChange={(e) => setUpdatedTime(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions style={styles.actionBtn}>
-          <Button onClick={handleSubmit} color="default">
-            Save
+      <Dialog open={props.open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <div style={{ width: 400 }}>
+          <DialogTitle id="form-dialog-title">Add New Issue</DialogTitle>
+          <DialogContent>
+            <CssTextField
+              margin="normal"
+              id="title"
+              label="Title"
+              type="text"
+              multiline
+              rows="2"
+              required
+              fullWidth
+              error={true}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <FormHelperText error={true} margin="dense">Required Field</FormHelperText>
+            <CssTextField
+              margin="normal"
+              id="state"
+              label="State"
+              type="text"
+              required
+              fullWidth
+              error={true}
+              onChange={(e) => setStatus(e.target.value)}
+            />
+            <FormHelperText error={true} margin="dense">Required Field</FormHelperText>
+            <CssTextField
+              margin="normal"
+              id="url"
+              label="Url"
+              type="text"
+              fullWidth
+              onChange={(e) => setUrl(e.target.value)}
+            />
+          </DialogContent>
+          <DialogActions style={styles.actionBtn}>
+            <Button onClick={handleSubmit} color="default">
+              Save
           </Button>
-          <Button onClick={handleClose} color="default">
-            Cancel
+            <Button onClick={handleClose} color="default">
+              Cancel
           </Button>
-        </DialogActions>
+          </DialogActions>
+        </div>
       </Dialog>
     </>
   );
