@@ -29,11 +29,34 @@ const styles = {
 
 const AddDialog = (props) => {
 
-  const [title, setTitle] = useState(null);
-  const [status, setStatus] = useState(null);
-  const [url, setUrl] = useState(null);
+  const initialErrorMsg = {
+    title: {
+      msg: "",
+      status: false,
+    },
+    status: {
+      msg: "",
+      status: false
+    },
+    isValidate: false,
+  }
+  const [title, setTitle] = useState("");
+  const [status, setStatus] = useState("");
+  const [url, setUrl] = useState("");
+  const [errorMsg, setErrorMsg] = useState(initialErrorMsg);
 
   const handleClose = () => {
+    setErrorMsg({
+      title: {
+        msg: "",
+        status: false,
+      },
+      status: {
+        msg: "",
+        status: false
+      },
+      isValidate: false,
+    })
     props.toggleAddDialog(false);
   }
 
@@ -51,8 +74,32 @@ const AddDialog = (props) => {
       updated_at: submittedTime,
     }
 
-    props.addIssue(newIssue);
-    props.toggleAddDialog(false);
+    if (errorMsg.isValidate) {
+      props.addIssue(newIssue);
+      props.toggleAddDialog(false);
+      setErrorMsg(initialErrorMsg);
+    }
+  }
+
+  const validateInput = (type, value) => {
+    const name = type === "title" ? "title" : "status";
+    const requiredMsg = {
+      msg: "Required Field",
+      status: true,
+    }
+
+    if (value === "") {
+      setErrorMsg({
+        ...errorMsg,
+        [name]: requiredMsg,
+        isValidate: false,
+      })
+    } else {
+      setErrorMsg({
+        ...errorMsg,
+        isValidate: true,
+      })
+    }
   }
 
   return (
@@ -66,25 +113,26 @@ const AddDialog = (props) => {
               id="title"
               label="Title"
               type="text"
-              multiline
-              rows="2"
               required
               fullWidth
-              error={true}
+              autoFocus
+              error={errorMsg.title.status}
               onChange={(e) => setTitle(e.target.value)}
+              onBlur={() => validateInput("title", title)}
             />
-            <FormHelperText error={true} margin="dense">Required Field</FormHelperText>
+            <FormHelperText error={errorMsg.title.status} margin="dense">{errorMsg.title.msg}</FormHelperText>
             <CssTextField
               margin="normal"
-              id="state"
+              id="status"
               label="State"
               type="text"
               required
               fullWidth
-              error={true}
+              error={errorMsg.status.status}
               onChange={(e) => setStatus(e.target.value)}
+              onBlur={() => validateInput("status", status)}
             />
-            <FormHelperText error={true} margin="dense">Required Field</FormHelperText>
+            <FormHelperText error={errorMsg.status.status} margin="dense">{errorMsg.status.msg}</FormHelperText>
             <CssTextField
               margin="normal"
               id="url"

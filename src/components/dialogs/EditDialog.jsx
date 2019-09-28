@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from '@material-ui/core';
+import { Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions, FormHelperText } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { toggleEditDialog } from '../../actions/dialogAction';
@@ -26,10 +26,22 @@ const styles = {
 
 const EditDialog = (props) => {
 
-  const [title, setTitle] = useState("");
-  const [status, setStatus] = useState("");
-  const [url, setUrl] = useState("");
-  const [created_at, setCreated_at] = useState("");
+  const initialErrorMsg = {
+    title: {
+      msg: "",
+      status: false,
+    },
+    status: {
+      msg: "",
+      status: false
+    },
+    isValidate: false,
+  }
+  const [title, setTitle] = useState(props.data.title);
+  const [status, setStatus] = useState(props.data.state);
+  const [url, setUrl] = useState(props.data.url);
+  const [created_at, setCreated_at] = useState(props.data.created_at);
+  const [errorMsg, setErrorMsg] = useState(initialErrorMsg);
 
   useEffect(() => {
     setTitle(props.data.title);
@@ -40,6 +52,7 @@ const EditDialog = (props) => {
 
   const handleClose = () => {
     props.toggleEditDialog(false);
+    setErrorMsg(initialErrorMsg);
   }
 
   const handleChange = (e) => {
@@ -56,8 +69,31 @@ const EditDialog = (props) => {
       updated_at: updatedTime,
     }
 
-    props.setDataAfterEdit(editedIssue);
-    handleClose();
+    if (errorMsg.isValidate) {
+      props.setDataAfterEdit(editedIssue);
+      handleClose();
+    }
+  }
+
+  const validateInput = (type, value) => {
+    const name = type === "title" ? "title" : "status";
+    const requiredMsg = {
+      msg: "Required Field",
+      status: true,
+    }
+
+    if (value === "") {
+      setErrorMsg({
+        ...errorMsg,
+        [name]: requiredMsg,
+        isValidate: false,
+      })
+    } else {
+      setErrorMsg({
+        ...errorMsg,
+        isValidate: true,
+      })
+    }
   }
 
   if (!props.data) {
@@ -74,9 +110,13 @@ const EditDialog = (props) => {
               label="Title"
               type="text"
               fullWidth
+              autoFocus
               value={title}
+              error={errorMsg.title.status}
               onChange={(e) => setTitle(e.target.value)}
+              onBlur={() => validateInput("title", title)}
             />
+            <FormHelperText error={errorMsg.title.status} margin="dense">{errorMsg.title.msg}</FormHelperText>
             <CssTextField
               margin="normal"
               id="state"
@@ -84,8 +124,11 @@ const EditDialog = (props) => {
               type="text"
               fullWidth
               value={status}
+              error={errorMsg.status.status}
               onChange={(e) => setStatus(e.target.value)}
+              onBlur={() => validateInput("status", status)}
             />
+            <FormHelperText error={errorMsg.status.status} margin="dense">{errorMsg.status.msg}</FormHelperText>
             <CssTextField
               margin="normal"
               id="url"

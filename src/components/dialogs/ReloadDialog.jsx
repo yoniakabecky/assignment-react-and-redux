@@ -14,8 +14,7 @@ const ReloadDialog = (props) => {
       <Dialog open={props.isOpen} onClose={handleClose}>
         <DialogContent style={{ textAlign: "center" }}>
           <DialogContentText>
-            You clicked the reload button!!<br />
-            Reloading data ...
+            This is dummy reload button...<br />
           </DialogContentText>
           <CircularProgress color="secondary" style={{ margin: "1.5rem auto" }} />
         </DialogContent>

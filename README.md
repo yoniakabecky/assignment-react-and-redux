@@ -12,7 +12,8 @@
     - [x] Auto Reload
 - [x] Delete Button
 - [x] Reload (Haven't done it but when change happen it'll be auto reload)
-- [x] Deploy ([Deployed with Firebase](https://assignment2-react-and-redux.firebaseapp.com/))
+- [x] Validation
 - [ ] Search Filter
 - [ ] Sort
 - [x] Pagination
+- [x] Deploy ([Deployed with Firebase](https://assignment2-react-and-redux.firebaseapp.com/))
